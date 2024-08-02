@@ -67,3 +67,6 @@ app.post('/email', (req, res) => {
 app.listen(3002, () => {
     console.log('Server is running on port 3002');
 })
+
+
+module.exports = app;n
