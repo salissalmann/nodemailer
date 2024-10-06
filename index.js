@@ -68,6 +68,43 @@ app.post('/email', (req, res) => {
 
 });
 
+app.post('/email-zeal', (req, res) => {
+  console.log(req.body);
+
+  const { subject, firstname, lastname, email, message , reciever} = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'salisbinsalman0@gmail.com',
+      pass: "tfde ggel qpus eanu",
+    },
+  });
+
+  // Email options
+  const mailOptions = {
+    from: process.env.GMAIL_USER,
+    to: req.body.reciever,
+    subject: subject,
+    text: `First name: ${firstname}\nLast name: ${lastname}\nEmail: ${email}\nMessage: ${message}`,
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, (error, response) => {
+    if (error) {
+      console.log(error);
+      res.status(200).send({ message: 'Email not sent', status: 'failed' });
+    } else {
+      console.log('Email sent: ' + response.response);
+      res.status(200).send({ message: 'Email sent', status: 'success' });
+    }
+    transporter.close();
+  });
+});
+
 app.listen(3002, () => {
   console.log('Server is running on port 3002');
 })
