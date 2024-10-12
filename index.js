@@ -71,7 +71,7 @@ app.post('/email', (req, res) => {
 app.post('/email-zeal', (req, res) => {
   console.log(req.body);
 
-  const { subject, firstname, lastname, email, message , reciever, message} = req.body;
+  const { subject, firstname, lastname, email, message , reciever } = req.body;
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -89,7 +89,7 @@ app.post('/email-zeal', (req, res) => {
     from: process.env.GMAIL_USER,
     to: req.body.reciever,
     subject: subject,
-    text:  `${message}`,
+    text:  message,
   };
 
   // Send email
